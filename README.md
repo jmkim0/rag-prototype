@@ -6,9 +6,9 @@ RAG 직업 추천 기능 로컬 구현
 
 ### Libraries
 - `xlmtodict`
-- `langchain`, `langchain-community`, `langchain-huggingface`
-- `faiss-cpu`
-- `mlx-lm`
+- [`langchain`, `langchain-community`, `langchain-huggingface`](https://github.com/langchain-ai/langchain)
+- [`faiss-cpu`](https://github.com/facebookresearch/faiss)
+- [`mlx-lm`](https://github.com/ml-explore/mlx-examples/blob/main/llms/README.md)
 - 그 외 하위 의존 라이브러리들 (별도 설치 필요 없음)
 
 ## Files
@@ -25,4 +25,4 @@ RAG 직업 추천 기능 로컬 구현
 
 ### Not in Repository
 - `secrets.yml`: 비밀 정보 파일
-  - `API_KEY`: 구직정보 데이터 API 인증키
+  - `API_KEY`: [구직정보 데이터](https://www.data.go.kr/data/15015153/openapi.do) API 인증키
