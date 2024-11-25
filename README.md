@@ -23,6 +23,6 @@ RAG 직업 추천 기능 로컬 구현
   - 로컬에서 MLX LM + LangChain Community 사용
   - Gemma 2 2B instruct 버전 4 bit 양자화 모델 사용 ([mlx-community/gemma-2-2b-it-4bit](https://huggingface.co/mlx-community/gemma-2-2b-it-4bit))
 
-### Not in Repository
+### Untracked
 - `secrets.yml`: 비밀 정보 파일
   - `API_KEY`: [구직정보 데이터](https://www.data.go.kr/data/15015153/openapi.do) API 인증키
