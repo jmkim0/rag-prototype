@@ -1,6 +1,16 @@
 # rag-prototype
 RAG 직업 추천 기능 로컬 구현
 
+## Requirements
+- Python 3.12에서 구현함
+
+### Libraries
+- `xlmtodict`
+- `langchain`, `langchain-community`, `langchain-huggingface`
+- `faiss-cpu`
+- `mlx-lm`
+- 그 외 하위 의존 라이브러리들 (별도 설치 필요 없음)
+
 ## Files
 - `save_index.py`: 구직 정보 데이터를 벡터 스토어에 입력 후 인덱스를 파일로 저장
   - 로컬에서 HuggingFace SBERT 임베딩 사용 ([dragonkue/BGE-m3-ko](https://huggingface.co/dragonkue/BGE-m3-ko))
@@ -12,6 +22,7 @@ RAG 직업 추천 기능 로컬 구현
 - `job_recommender.py`: 로컬 임베딩, 로컬 LLM으로 직업 추천 기능 구현
   - 로컬에서 MLX LM + LangChain Community 사용
   - Gemma 2 2B instruct 버전 4 bit 양자화 모델 사용 ([mlx-community/gemma-2-2b-it-4bit](https://huggingface.co/mlx-community/gemma-2-2b-it-4bit))
+
 ### Not in Repository
 - `secrets.yml`: 비밀 정보 파일
   - `API_KEY`: 구직정보 데이터 API 인증키
