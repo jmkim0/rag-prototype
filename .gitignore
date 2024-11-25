@@ -1,0 +1,8 @@
+# Virtual Environment
+.venv
+
+# Secrets
+secrets.yaml
+
+# Vector Store Saved Index
+faiss_index
