@@ -75,20 +75,21 @@ async def main():
         if area == "exit":
             break
 
+        retriever = vector_store.as_retriever(
+            search_kwargs={
+                "k": 5,
+                "filter": create_filter_fn(datetime.now().strftime("%Y%m%d"), area),
+                "fetch_k": 50,
+            }
+        )
+        rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+
         while True:
             profile = input("이력: ")
 
             if not profile:
                 break
 
-            retriever = vector_store.as_retriever(
-                search_kwargs={
-                    "k": 5,
-                    "filter": create_filter_fn(datetime.now().strftime("%Y%m%d"), area),
-                    "fetch_k": 50,
-                }
-            )
-            rag_chain = create_retrieval_chain(retriever, question_answer_chain)
             response = await rag_chain.ainvoke({"input": profile})
 
             print(response)
