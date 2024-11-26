@@ -16,7 +16,7 @@ def main():
     index_path = Path("faiss_index")
 
     if index_path.exists():
-        print(f"Loads a saved index: {str(index_path)}.")
+        print(f"Loads the saved index: {str(index_path)}.")
         vector_store = FAISS.load_local(
             str(index_path), embeddings, allow_dangerous_deserialization=True
         )
@@ -63,7 +63,7 @@ def main():
         document_id = str(uuid.uuid5(uuid.NAMESPACE_URL, str(info_url_with_params)))
 
         # 존재하는 문서 id면 넘어감
-        # TODO: 존재하는 id의 문서 추가시 해당 문서 최신화하는 방식으로 개선
+        # TODO: 존재하는 id의 문서 추가시 해당 문서 최신화하는 방식으로 개선 고려
         if document_id in ids or isinstance(
             vector_store.docstore.search(document_id), Document
         ):

@@ -6,7 +6,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.chat_models.mlx import ChatMLX
 from langchain_community.llms.mlx_pipeline import MLXPipeline
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
@@ -28,20 +28,20 @@ async def main():
     )
     llm = ChatMLX(llm=pipeline)
 
-    initial_prompt = (
+    template = (
         "You are an assistant for making a personalized job opening list. "
-        "The following input is the user's profile to retrieve context. "
-        "Use the following pieces of retrieved context to make the list. "
-        "Summarize each job opening item into a sublist of up to three items. "
-        "If there is no context, apologize about that."
+        "Use following pieces of the retrieved context to make the list. "
+        "The retrieved context is a set of job openings."
+        "Summarize each job opening into a sublist of up to three items. "
+        "If there is no context, apologize about that you cannot find job openings."
         "Answer in Korean."
         "\n\n"
-        "Profile: {input}"
+        "{context}"
         "\n\n"
-        "Context: {context}"
+        "이력: {input}"
     )
 
-    prompt = ChatPromptTemplate.from_messages([("user", initial_prompt)])
+    prompt = PromptTemplate.from_template(template)
     question_answer_chain = create_stuff_documents_chain(llm, prompt)
 
     def create_filter_fn(date, area):
@@ -78,14 +78,14 @@ async def main():
         while True:
             profile = input("이력: ")
 
-            if profile == "back":
+            if not profile:
                 break
 
             retriever = vector_store.as_retriever(
                 search_kwargs={
                     "k": 5,
                     "filter": create_filter_fn(datetime.now().strftime("%Y%m%d"), area),
-                    "fetch_k": 50
+                    "fetch_k": 50,
                 }
             )
             rag_chain = create_retrieval_chain(retriever, question_answer_chain)
