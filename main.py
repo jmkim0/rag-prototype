@@ -125,6 +125,15 @@ async def summarize_and_generate(documents: List[Document]):
     return summary, result
 
 
+async def create_template_response(request: Request, documents: List[Document]):
+    summary, result = await summarize_and_generate(documents)
+
+    return templates.TemplateResponse(
+        "result.html",
+        {"request": request, "summary": summary, "result": result},
+    )
+
+
 app = FastAPI(lifespan=lifespan)
 
 templates = Jinja2Templates(directory="templates")
@@ -157,13 +166,7 @@ async def process_upload(request: Request, file: UploadFile = File(...)):
             content={"error": "지원하지 않는 파일 형식입니다."}, status_code=400
         )
 
-    summary, result = await summarize_and_generate(documents)
-
-    # 결과를 프론트로 전달
-    return templates.TemplateResponse(
-        "result.html",
-        {"request": request, "summary": summary, "result": result["answer"]},
-    )
+    return await create_template_response(request, documents)
 
 
 @app.post("/process_create")
@@ -201,9 +204,4 @@ async def submit_resume(
     # `Document` 객체로 변환
     document = Document(page_content=resume)
 
-    summary, result = await summarize_and_generate([document])
-
-    return templates.TemplateResponse(
-        "result.html",
-        {"request": request, "summary": summary, "result": result["answer"]},
-    )
+    return await create_template_response(request, [document])
