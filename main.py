@@ -188,7 +188,7 @@ async def submit_resume(
         resume += f"나이: {age}\n"
     if contact:
         resume += f"연락처: {contact}\n"
-    if education:
+    if experience:
         resume += f"주요 경력: {experience}\n"
     if education:
         resume += f"학력: {education}\n"
