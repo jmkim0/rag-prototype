@@ -14,13 +14,15 @@
       <h1>결과</h1>
     </header>
     <main class="container">
-      <article>
+      <article id="summary">
         <h2>이력서 요약</h2>
-        <p>{{ summary|replace("<end_of_turn>", "") }}</p>
       </article>
       <article id="result"></article>
       <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
       <script>
+        document.getElementById('summary').innerHTML += marked.parse(
+          {{ "%r"|format(summary)|safe }}
+        );
         document.getElementById('result').innerHTML = marked.parse(
           {{ "%r"|format(result.answer)|safe }}
         );
