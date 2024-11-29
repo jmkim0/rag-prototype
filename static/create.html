@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>이력서 작성</title>
-</head>
-<body>
-    <h1>이력서 작성</h1>
-    <form action="/process_create" method="post">
-        <label>이름:</label> <input type="text" name="name"><br>
-        <label>나이:</label> <input type="number" name="age"><br>
-        <label>연락처:</label> <input type="text" name="contact"><br>
-        <label>주요 경력:</label> <textarea name="experience"></textarea><br>
-        <label>학력:</label> <textarea name="education"></textarea><br>
-        <label>자격증:</label> <textarea name="certifications"></textarea><br>
-        <label>기술:</label> <textarea name="skills"></textarea><br>
-        <label>희망 직무:</label> <input type="text" name="desired_job"><br>
-        <label>희망 근무지:</label> <input type="text" name="desired_location"><br><br>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+  </head>
+  <body>
+    <header class="container">
+      <h1>이력서 작성</h1>
+    </header>
+    <main class="container">
+      <form action="/process_create" method="post">
+        <label for="text">이름:<input type="text" name="name" /></label>
+        <div class="grid">
+          <label for="number">나이: <input type="number" name="age" /></label>
+          <label for="text">연락처: <input type="text" name="contact" /></label>
+        </div>
+        <label for="textarea"
+          >주요 경력: <textarea name="experience"></textarea>
+        </label>
+        <label for="textarea"
+          >학력: <textarea name="education"></textarea>
+        </label>
+        <label for="textarea"
+          >자격증: <textarea name="certifications"></textarea>
+        </label>
+        <label for="textarea">기술: <textarea name="skills"></textarea></label>
+        <div class="grid">
+          <label for="text"
+            >희망 직무: <input type="text" name="desired_job"
+          /></label>
+          <label for="text"
+            >희망 근무지:
+            <input type="text" name="desired_location" />
+          </label>
+        </div>
         <button type="submit">확인</button>
-    </form>
-</body>
+        <script>
+          const form = document.querySelector('form');
+          const button = document.querySelector('button');
+
+          form.addEventListener('submit', () =>
+            button.setAttribute('aria-busy', 'true')
+          );
+        </script>
+      </form>
+    </main>
+  </body>
 </html>
