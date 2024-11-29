@@ -60,7 +60,7 @@ async def lifespan(app: FastAPI):
 
     summarize_template = (
         "The following context is the user's profile to find a job. "
-        "Write a useful summary of the profile in up to three sentences. "
+        "Write a useful summary of the profile in three sentences or less. "
         "Don't add any comments to the summary. "
         "As the context is in Korean, write the summary in Korean."
         "\n\n"
