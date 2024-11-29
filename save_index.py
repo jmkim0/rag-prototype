@@ -53,7 +53,7 @@ def main():
     docs = []
     ids = []
 
-    list_response = httpx.get(list_url, params=list_params, timeout=10)
+    list_response = httpx.get(list_url, params=list_params, timeout=20)
 
     for item in xmltodict.parse(list_response.text)["response"]["body"]["items"][
         "item"
@@ -69,7 +69,7 @@ def main():
         ):
             continue
 
-        info_response = httpx.get(info_url_with_params, timeout=10)
+        info_response = httpx.get(info_url_with_params, timeout=20)
         info_dict = xmltodict.parse(info_response.text)["response"]["body"]["items"][
             "item"
         ]
@@ -79,12 +79,17 @@ def main():
             "to": info_dict.get("toAcptDd"),
             "location": info_dict.get("plDetAddr"),
         }
-        content = (
-            f"채용제목: {info_dict.get('wantedTitle', '')}\n"
-            f"사업장명: {info_dict.get('plbizNm', '')}\n"
-            f"상세내용: {info_dict.get('detCnts', '')}\n"
-            f"기타사항: {info_dict.get('etcItm', '')}\n"
-        )
+        title = info_dict.get("wantedTitle")
+        company_name = info_dict.get("plbizNm")
+        detail = info_dict.get("detCnts")
+        misc = info_dict.get("etcItm")
+        content = f"채용제목: {title}\n" if title else ""
+        if company_name:
+            content += f"사업장명: {company_name}\n"
+        if detail:
+            content += f"상세내용: {detail}\n"
+        if misc:
+            content += f"기타사항: {misc}\n"
         docs.append(Document(page_content=content, metadata=metadata))
         ids.append(document_id)
 
